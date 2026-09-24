@@ -92,6 +92,6 @@ Helpers:
 
 Recorder: `purge_keep_days: 60` in `configuration.yaml` (sinds 2026-09-24, was 10). Long-term statistics (uurgemiddelden van temperaturen en modulatie) blijven onbeperkt bewaard.
 
-Dashboard: tab **CV** op het Overview-dashboard (`/dashboard-overview/cv`).
+Dashboard: tab **CV** op het Overview-dashboard (`/dashboard-overview/cv`). Sectie **Bediening** (sinds 2026-09-24): thermostaat met tijdelijke override, een annuleerknop en de huidige override (beide alleen zichtbaar als er een override actief is), en de buitentemperatuur die naar de iSense gaat.
 
 Setpoint overschrijven werkt via `climate.opentherm_thermostat` (tijdelijk tot het volgende programmablok). Annuleren met `button.opentherm_thermostat_cancel_room_setpoint_override`. Na annuleren toont de climate-entity nog de oude doelwaarde. Stel je daarna dezelfde waarde opnieuw in, dan stuurt HA niets.
