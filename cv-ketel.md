@@ -7,6 +7,7 @@ Logboek van instellingen aan ketel, thermostaat en OTGW. Nieuwste wijziging bove
 * Ketel: Remeha Avanta (manufacturer ID 11)
 * Thermostaat: Remeha iSense
 * Afgifte: vloerverwarming met mengklep, ingesteld op 30 °C. De OTGW meet aan de ketelkant. De retour is vrijwel gelijk aan de vloerretour (geïsoleerde leidingen, direct terug naar de ketel). De vloeraanvoer is ongeveer het minimum van ketelaanvoer en 30 °C.
+* Tapwater warmhouden (comfort/eco) staat uit op de ketel. Tapwater uitzetten bij vakantie is daarom niet nodig.
 * Combiketel: tijdens tapwater meet de aanvoersensor het primaire water naar de tapwaterwisselaar (tot ongeveer 60 °C). Pieken in aanvoer en retour tijdens tappen zijn dus tapwater, geen CV.
 * OpenTherm Gateway: firmware 6.7, gateway-modus (G), in Home Assistant via `opentherm_gw` (gateway-ID `otgw`)
 
