@@ -97,6 +97,8 @@ Dashboard: tab **CV** op het Overview-dashboard (`/dashboard-overview/cv`). Sect
 
 Tab **Huis**: Bubble Card-knop **Verwarming** (kamertemperatuur, vlammetje als de brander aan is) met pop-up `#verwarming`: Bubble climate-kaart voor de tijdelijke override, kamer, setpoint iSense, brander, buiten, override annuleren en een link naar de CV-tab.
 
+Let op bij Bubble Card en deze thermostaat: de entity kan niet uit (`climate.turn_off` wordt niet ondersteund). Bubble zet bij een climate-entity standaard een toggle op de knop en op de kop van de pop-up. Daarom staan alle acties op de knop, de pop-up en de climate-kaart expliciet op more-info, navigate of none, en de pop-up op `button_type: state`.
+
 Weergave: kamer-, aanvoer-, retour-, buitentemperatuur en gevraagde aanvoer tonen 1 decimaal (`display_precision`). OpenTherm levert waarden als 21,09765625.
 
 Setpoint overschrijven werkt via `climate.opentherm_thermostat` (tijdelijk tot het volgende programmablok). Annuleren met `button.opentherm_thermostat_cancel_room_setpoint_override`. Na annuleren toont de climate-entity nog de oude doelwaarde. Stel je daarna dezelfde waarde opnieuw in, dan stuurt HA niets.
