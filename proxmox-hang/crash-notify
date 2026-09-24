@@ -1,0 +1,63 @@
+#!/bin/bash
+# Mails via the PVE "Postmark" SMTP target when the previous boot ended without a clean shutdown.
+# Marker exists while the system runs; ExecStop removes it on clean shutdown.
+set -u
+MAILTO="marvin@linthorst.org"
+STATE=/var/lib/crash-notify
+MARKER=$STATE/running
+PSTORE=/var/lib/systemd/pstore
+mkdir -p "$STATE/pstore-archive"
+
+cfg_value() { # $1=file $2=key, within the "smtp: Postmark" section
+    awk -v k="$2" '/^[a-z]+: /{s=($0=="smtp: Postmark")} s && $1==k {print $2}' "$1"
+}
+
+send_mail() { # $1=subject, body on stdin
+    local server port user pass from
+    server=$(cfg_value /etc/pve/notifications.cfg server)
+    port=$(cfg_value /etc/pve/notifications.cfg port)
+    user=$(cfg_value /etc/pve/notifications.cfg username)
+    from=$(cfg_value /etc/pve/notifications.cfg from-address)
+    pass=$(cfg_value /etc/pve/priv/notifications.cfg password)
+    {
+        printf 'From: %s\r\nTo: %s\r\nSubject: %s\r\nDate: %s\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n' \
+            "$from" "$MAILTO" "$1" "$(date -R)"
+        cat
+    } | curl -sS --retry 5 --retry-delay 10 --retry-all-errors \
+        --url "smtp://$server:$port" --ssl-reqd \
+        --user "$user:$pass" --mail-from "$from" --mail-rcpt "$MAILTO" --upload-file -
+}
+
+case "${1:-}" in
+stop)
+    rm -f "$MARKER"
+    exit 0
+    ;;
+test)
+    { echo "Test mail from crash-notify on $(hostname) at $(date)."; echo; last -x | head -5; } \
+        | send_mail "[$(hostname)] crash-notify test"
+    exit $?
+    ;;
+esac
+
+new_pstore=$(find "$PSTORE" -mindepth 1 -maxdepth 1 2>/dev/null)
+if [ -e "$MARKER" ] || [ -n "$new_pstore" ]; then
+    {
+        echo "$(hostname) booted at $(uptime -s) after an unclean shutdown."
+        echo
+        if [ -n "$new_pstore" ]; then
+            echo "== Kernel panic log (pstore) =="
+            find "$PSTORE" -type f -name 'dmesg*' -exec tail -n 80 {} \;
+        else
+            echo "No pstore dump: hard hang or power loss (no kernel panic)."
+        fi
+        echo
+        echo "== Last 40 journal lines of previous boot =="
+        journalctl -b -1 -n 40 --no-pager -o short-iso
+        echo
+        echo "== last -x =="
+        last -x | head -6
+    } | send_mail "[$(hostname)] crash detected, previous boot ended uncleanly"
+    [ -n "$new_pstore" ] && mv "$PSTORE"/* "$STATE/pstore-archive/"
+fi
+touch "$MARKER"

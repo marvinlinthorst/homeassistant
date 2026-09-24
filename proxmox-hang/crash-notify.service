@@ -1,0 +1,13 @@
+[Unit]
+Description=Mail when the previous boot crashed
+Wants=network-online.target
+After=network-online.target systemd-pstore.service pve-cluster.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/sbin/crash-notify
+ExecStop=/usr/local/sbin/crash-notify stop
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,4 @@
+#!/bin/bash
+# Synced write first: during an I/O stall this blocks, so the ping stops and healthchecks.io alerts.
+timeout 20 dd if=/dev/zero of=/var/lib/hc-heartbeat bs=4k count=1 oflag=sync status=none || exit 1
+curl -fsS -m 10 --retry 3 -o /dev/null https://hc-ping.com/de1fd1e4-aff0-4ddf-9c39-470d8da90c0e
