@@ -95,4 +95,8 @@ Recorder: `purge_keep_days: 60` in `configuration.yaml` (sinds 2026-09-24, was 1
 
 Dashboard: tab **CV** op het Overview-dashboard (`/dashboard-overview/cv`). Sectie **Bediening** (sinds 2026-09-24): thermostaat met tijdelijke override, een annuleerknop en de huidige override (beide alleen zichtbaar als er een override actief is), en de buitentemperatuur die naar de iSense gaat.
 
+Tab **Huis**: Bubble Card-knop **Verwarming** (kamertemperatuur, vlammetje als de brander aan is) met pop-up `#verwarming`: Bubble climate-kaart voor de tijdelijke override, kamer, setpoint iSense, brander, buiten, override annuleren en een link naar de CV-tab.
+
+Weergave: kamer-, aanvoer-, retour-, buitentemperatuur en gevraagde aanvoer tonen 1 decimaal (`display_precision`). OpenTherm levert waarden als 21,09765625.
+
 Setpoint overschrijven werkt via `climate.opentherm_thermostat` (tijdelijk tot het volgende programmablok). Annuleren met `button.opentherm_thermostat_cancel_room_setpoint_override`. Na annuleren toont de climate-entity nog de oude doelwaarde. Stel je daarna dezelfde waarde opnieuw in, dan stuurt HA niets.
