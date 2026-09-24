@@ -6,7 +6,8 @@ Logboek van instellingen aan ketel, thermostaat en OTGW. Nieuwste wijziging bove
 
 * Ketel: Remeha Avanta (manufacturer ID 11)
 * Thermostaat: Remeha iSense
-* Afgifte: vloerverwarming met mengklep, ingesteld op 30 °C. De OTGW meet aan de ketelkant, dus aanvoer, retour en ΔT zeggen weinig over de vloergroep zelf.
+* Afgifte: vloerverwarming met mengklep, ingesteld op 30 °C. De OTGW meet aan de ketelkant. De retour is vrijwel gelijk aan de vloerretour (geïsoleerde leidingen, direct terug naar de ketel). De vloeraanvoer is ongeveer het minimum van ketelaanvoer en 30 °C.
+* Combiketel: tijdens tapwater meet de aanvoersensor het primaire water naar de tapwaterwisselaar (tot ongeveer 60 °C). Pieken in aanvoer en retour tijdens tappen zijn dus tapwater, geen CV.
 * OpenTherm Gateway: firmware 6.7, gateway-modus (G), in Home Assistant via `opentherm_gw` (gateway-ID `otgw`)
 
 ## Ketel
@@ -67,7 +68,7 @@ Let op: met de mengklep geldt de grens voor het ketelwater. De mengklep staat op
 | Datum | Commando | Effect |
 |---|---|---|
 | 2026-09-24 | `AA=28` | Gateway vraagt de retourtemperatuur zelf aan de ketel. De iSense doet dat nooit, waardoor de waarde anders alleen bij het opstarten werd gelezen. |
-| 2026-09-24 | `AA=19`, `AA=26` | Tapwaterdebiet en tapwatertemperatuur. Nog niet bevestigd dat de Avanta deze ondersteunt. |
+| 2026-09-24 | `AA=19`, `AA=26` | Tapwaterdebiet en tapwatertemperatuur. Bij een tapbeurt van 38 s bleef het debiet 0, dus waarschijnlijk niet ondersteund. Kort verwijderd (`DA`) en dezelfde avond teruggezet voor een testweek. Evalueren rond 2026-10-01: nog steeds 0 na douchebeurten, dan `DA=19` en `DA=26` en de entiteiten uitschakelen. |
 
 Verwijderen kan met `DA=<id>`. De AA-lijst staat in het EEPROM van de gateway en blijft na een herstart bewaard.
 
@@ -85,9 +86,11 @@ Automations in categorie **CV**:
 Helpers:
 
 * `sensor.cv_delta_t`: aanvoer min retour (ketelkant)
-* `binary_sensor.cv_brander_verwarming`: brander aan en geen tapwater
+* `binary_sensor.cv_brander_verwarming`: brander aan en ketel in CV-modus. Eerst was dit "brander aan en geen tapwater", maar na elke tapbeurt gaat de tapwatervlag een seconde eerder uit dan de brander, wat als valse CV-start telde.
 * `sensor.cv_branderstarts_afgelopen_uur`: telt starts van bovenstaande
 * `sensor.woonkamer_opentherm_boiler_cv_brander_aan_vandaag` en `..._cv_warm_water_vandaag`: branduren vandaag
+
+Recorder: `purge_keep_days: 60` in `configuration.yaml` (sinds 2026-09-24, was 10). Long-term statistics (uurgemiddelden van temperaturen en modulatie) blijven onbeperkt bewaard.
 
 Dashboard: tab **CV** op het Overview-dashboard (`/dashboard-overview/cv`).
 
