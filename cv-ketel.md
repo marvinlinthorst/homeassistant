@@ -96,6 +96,8 @@ Recorder: `purge_keep_days: 60` in `configuration.yaml` (sinds 2026-09-24, was 1
 
 Dashboard: tab **CV** op het Overview-dashboard (`/dashboard-overview/cv`). Sectie **Bediening** (sinds 2026-09-24): thermostaat met tijdelijke override, een annuleerknop en de huidige override (beide alleen zichtbaar als er een override actief is), en de buitentemperatuur die naar de iSense gaat.
 
+Grafieken (sinds 2026-09-25, HACS `apexcharts-card`): onder **Watertemperaturen** een extra grafiek **Alles samen** met aanvoer, retour, gevraagde aanvoer, kamer en setpoint (links, °C) en modulatie plus brander als oranje vlak (rechts, %). **Afgelopen week** is een staafgrafiek van branduren CV en warm water per dag (max van de dagteller), was een history-graph.
+
 Tab **Huis**: Bubble Card-knop **Verwarming** (kamertemperatuur, vlammetje als de brander aan is) met pop-up `#verwarming`: Bubble climate-kaart voor de tijdelijke override, kamer, setpoint iSense, brander, buiten, override annuleren en een link naar de CV-tab.
 
 Let op bij Bubble Card en deze thermostaat: de entity kan niet uit (`climate.turn_off` wordt niet ondersteund). Bubble zet bij een climate-entity standaard een toggle op de knop en op de kop van de pop-up. Daarom staan alle acties op de knop, de pop-up en de climate-kaart expliciet op more-info, navigate of none, en de pop-up op `button_type: state`.
