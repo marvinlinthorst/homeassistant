@@ -27,3 +27,15 @@ Core-integratie Speedtest.net (`speedtestdotnet`), server automatisch. Sensoren 
 Test elk uur (standaard polling). Elke test trekt de lijn even vol. Wordt dat hinderlijk: polling uitzetten in de systeemopties van de integratie en een automation maken die 's nachts `homeassistant.update_entity` op een van de sensoren aanroept.
 
 Afgewezen: `leorbs/ha-cloudflare-speedtest` (0 sterren, sinds maart 2025 geen activiteit) en `soulripper13/hass-speedtest-ookla` (52 sterren, core doet hetzelfde).
+
+## Weer
+
+Bijgewerkt 2026-09-25.
+
+- `weather.buienradar` (core Buienradar): neerslag komende 2 uur (`sensor.precipitation_forecast_total`) en buitentemperatuur van het KNMI-station. Gebruikt door Regenmelding Manon en de CV-buitentemperatuur naar OTGW.
+- `weather.openweathermap`: uurverwachting voor de middag in Regenmelding Manon.
+- `weather.knmi` (`golles/ha-knmi` via HACS, data van Weerlive.nl): verwachting uit het HARMONIE-model, per uur voor ongeveer een dag en per dag voor 5 dagen. Extra: `binary_sensor.knmi_warning` (KNMI-waarschuwing actief) en `sensor.knmi_weather_forecast` (tekst). API-sleutel van weerlive.nl, maximaal 300 aanvragen per dag. Staat op de weerkaart van Overview, tab Huis.
+
+Verwijderd: Open-Meteo (`weather.home`, werd nergens gebruikt) en Met.no (`weather.forecast_home`, alleen de weerkaart, vervangen door KNMI).
+
+Afgewezen: Pirate Weather. Voegt in Nederland weinig toe naast Buienradar en KNMI.
