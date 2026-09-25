@@ -83,6 +83,7 @@ Automations in categorie **CV**:
 * **CV pendelen melding**: push bij meer dan 6 branderstarts voor verwarming per uur (tapwater telt niet mee).
 * **CV buitentemperatuur naar OTGW**: stuurt de temperatuur van `weather.buienradar` naar de gateway (ID 27), bij elke wijziging en elke 30 minuten.
 * **CV buitentemperatuur verouderd melding**: push als er langer dan een uur geen nieuwe buitentemperatuur is gestuurd, en weer als het hersteld is. Werkt via `binary_sensor.cv_buitentemperatuur_verouderd`.
+* **CV kamer onder setpoint melding** (sinds 2026-09-25): push als de kamer 2 uur lang meer dan 0,5 °C onder het setpoint van de iSense zit, en weer als hij hersteld is. Signaal om de mengklep (nu 30 °C) hoger te zetten. Werkt via `binary_sensor.cv_kamer_onder_setpoint`, dat het actuele setpoint gebruikt (ook bij een override). Bij een override omhoog of langdurig luchten kan hij terecht afgaan zonder dat de mengklep het probleem is. Na een HA-herstart tijdens een melding komt er geen herstelmelding.
 
 Helpers:
 
@@ -98,6 +99,8 @@ Dashboard: tab **CV** op het Overview-dashboard (`/dashboard-overview/cv`). Sect
 Tab **Huis**: Bubble Card-knop **Verwarming** (kamertemperatuur, vlammetje als de brander aan is) met pop-up `#verwarming`: Bubble climate-kaart voor de tijdelijke override, kamer, setpoint iSense, brander, buiten, override annuleren en een link naar de CV-tab.
 
 Let op bij Bubble Card en deze thermostaat: de entity kan niet uit (`climate.turn_off` wordt niet ondersteund). Bubble zet bij een climate-entity standaard een toggle op de knop en op de kop van de pop-up. Daarom staan alle acties op de knop, de pop-up en de climate-kaart expliciet op more-info, navigate of none, en de pop-up op `button_type: state`.
+
+Modulatie (`sensor.opentherm_boiler_relative_modulation_level`) is relatief ten opzichte van het minimumvermogen. Bij CV staat die op 0 % met de vlam aan: de ketel brandt dan op minimum. Bij zacht weer (10 °C buiten) is dat al meer dan de vloer vraagt, dus de brander gaat ongeveer 2 keer per uur aan (runs van 8 tot 18 min, retour rond 24 °C). Dat is geen pendelen.
 
 Weergave: kamer-, aanvoer-, retour-, buitentemperatuur en gevraagde aanvoer tonen 1 decimaal (`display_precision`). OpenTherm levert waarden als 21,09765625.
 
