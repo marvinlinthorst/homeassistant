@@ -92,6 +92,7 @@ Helpers:
 * `sensor.cv_branderstarts_afgelopen_uur`: telt starts van bovenstaande
 * `sensor.cv_verwarming_vandaag` (sinds 2026-09-25): history_stats, branduren alleen voor CV (`binary_sensor.cv_brander_verwarming`). Vervangt op de CV-tab `sensor.woonkamer_opentherm_boiler_cv_brander_aan_vandaag`, die ondanks de naam op `binary_sensor.opentherm_boiler_flame` telt en dus tapwater meerekent. De oude helper is op 2026-09-25 verwijderd.
 * `sensor.cv_branderstarts_vandaag` (sinds 2026-09-25): history_stats, telt starts van `binary_sensor.cv_brander_verwarming` sinds middernacht. Voor de grafiek op de CV-tab.
+* `sensor.cv_kamer_onder_setpoint_7_dagen` (sinds 2026-09-25): history_stats (ratio), percentage van de afgelopen 7 dagen dat `binary_sensor.cv_kamer_onder_setpoint` aan stond. Om te beoordelen of de mengklep structureel te laag staat, waar de melding alleen een momentopname geeft. Pas vanaf 2026-10-02 over een volle week betrouwbaar, omdat de binary sensor pas op 2026-09-25 is aangemaakt.
 * `sensor.woonkamer_opentherm_boiler_cv_warm_water_vandaag`: branduren warm water vandaag
 
 Recorder: `purge_keep_days: 60` in `configuration.yaml` (sinds 2026-09-24, was 10). Long-term statistics (uurgemiddelden van temperaturen en modulatie) blijven onbeperkt bewaard.
