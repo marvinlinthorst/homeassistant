@@ -20,19 +20,11 @@ Getest: knop vanaf de OnePlus zet de helper aan. Nog niet bevestigd dat `clear_n
 
 ## Speedtest
 
-Geïnstalleerd 2026-09-25.
+Getest op 2026-09-25 en weer verwijderd, niet nodig.
 
-Ookla Speedtest (`soulripper13/hass-speedtest-ookla` via HACS, domein `ookla_speedtest`). Gebruikt de officiële Ookla CLI.
+Bevinding voor later: de core-integratie Speedtest.net (`speedtest-cli` 2.1.3, oude Ookla API) plaatst ons KPN-IP in Catalonië en meet alleen tegen Spaanse servers (10 Mbit, 52 ms). Een andere server kiezen kan daar niet. De HACS-integratie `soulripper13/hass-speedtest-ookla` gebruikt de officiële Ookla CLI en ziet wel Nederlandse servers: tegen KPN Amstelveen (ID 61186) 930 Mbit down, 914 Mbit up, 3,7 ms ping, bufferbloat A.
 
-Instellingen: server KPN B.V. Amstelveen (ID 61186), terugval naar dichtstbijzijnde server aan, test elk uur. Handmatig testen met actie `ookla_speedtest.run_speedtest`. Sensoren onder meer `sensor.ookla_speedtest_download`, `_upload`, `_ping`, `_jitter`, `_server` en `_bufferbloat_grade`.
-
-Eerste meting: 930 Mbit down, 914 Mbit up, 3,7 ms ping, bufferbloat A.
-
-Waarom niet de core-integratie Speedtest.net: die draait op `speedtest-cli` 2.1.3 (2019) met de oude Ookla API. Die plaatst ons KPN-IP in Catalonië, dus alleen Spaanse servers (10 Mbit, 52 ms). Een andere server kiezen kan daar niet, de opties accepteren alleen die lijst. De officiële CLI ziet wel Nederlandse servers. Ipinfo plaatst het IP gewoon in Nederland, het probleem zit alleen in de oude API.
-
-Tijdens een test is HA via de Cloudflare-tunnel even onbereikbaar (502).
-
-Afgewezen: `leorbs/ha-cloudflare-speedtest` (0 sterren, sinds maart 2025 geen activiteit).
+Tijdens een test is HA via de Cloudflare-tunnel even onbereikbaar (502). Elk uur testen kost bij deze snelheid 1 à 2 GB per test.
 
 ## Weer
 
