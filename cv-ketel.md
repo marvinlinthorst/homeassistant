@@ -90,16 +90,16 @@ Helpers:
 * `sensor.cv_delta_t`: aanvoer min retour (ketelkant)
 * `binary_sensor.cv_brander_verwarming`: brander aan en ketel in CV-modus. Eerst was dit "brander aan en geen tapwater", maar na elke tapbeurt gaat de tapwatervlag een seconde eerder uit dan de brander, wat als valse CV-start telde.
 * `sensor.cv_branderstarts_afgelopen_uur`: telt starts van bovenstaande
-* `sensor.cv_verwarming_vandaag` (sinds 2026-09-25): history_stats, branduren alleen voor CV (`binary_sensor.cv_brander_verwarming`). Vervangt op de CV-tab `sensor.woonkamer_opentherm_boiler_cv_brander_aan_vandaag`, die ondanks de naam op `binary_sensor.opentherm_boiler_flame` telt en dus tapwater meerekent. Die oude helper wordt nergens meer gebruikt.
+* `sensor.cv_verwarming_vandaag` (sinds 2026-09-25): history_stats, branduren alleen voor CV (`binary_sensor.cv_brander_verwarming`). Vervangt op de CV-tab `sensor.woonkamer_opentherm_boiler_cv_brander_aan_vandaag`, die ondanks de naam op `binary_sensor.opentherm_boiler_flame` telt en dus tapwater meerekent. De oude helper is op 2026-09-25 verwijderd.
 * `sensor.cv_branderstarts_vandaag` (sinds 2026-09-25): history_stats, telt starts van `binary_sensor.cv_brander_verwarming` sinds middernacht. Voor de grafiek op de CV-tab.
-* `sensor.woonkamer_opentherm_boiler_cv_brander_aan_vandaag` en `..._cv_warm_water_vandaag`: branduren vandaag
+* `sensor.woonkamer_opentherm_boiler_cv_warm_water_vandaag`: branduren warm water vandaag
 
 Recorder: `purge_keep_days: 60` in `configuration.yaml` (sinds 2026-09-24, was 10). Long-term statistics (uurgemiddelden van temperaturen en modulatie) blijven onbeperkt bewaard.
 
 Dashboard: tab **CV** op het Overview-dashboard (`/dashboard-overview/cv`). Sectie **Bediening** (sinds 2026-09-24): thermostaat met tijdelijke override, een annuleerknop en de huidige override (beide alleen zichtbaar als er een override actief is), en de buitentemperatuur die naar de iSense gaat.
 
 Grafieken (sinds 2026-09-25, HACS `apexcharts-card`): onder **Watertemperaturen** een extra grafiek **Alles samen** met aanvoer, retour, gevraagde aanvoer, kamer en setpoint (links, °C) en modulatie plus brander als oranje vlak (rechts, %). **Afgelopen week** is een gestapelde staafgrafiek van branduren CV en warm water per dag (max van de dagteller), was een history-graph.
-Daaronder: **Stoken en weer (30 dagen)** (branduren per dag tegen gemiddelde buitentemperatuur), **Branderstarts CV per dag** (14 dagen) en **Comfort (7 dagen)** (kamer en setpoint, uurgemiddelde).
+Daaronder: **Stoken en weer (30 dagen)** (branduren per dag tegen gemiddelde buitentemperatuur), **Branderstarts CV per dag** (14 dagen) en **Comfort (7 dagen)** (kamer volgens iSense, woonkamer volgens ALPSTUGA en setpoint, uurgemiddelde; verschil tussen de twee laat zien of de iSense op een koude of warme plek hangt).
 
 Tab **Huis**: Bubble Card-knop **Verwarming** (kamertemperatuur, vlammetje als de brander aan is) met pop-up `#verwarming`: Bubble climate-kaart voor de tijdelijke override, kamer, setpoint iSense, brander, buiten, override annuleren en een link naar de CV-tab.
 
