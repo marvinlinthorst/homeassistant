@@ -100,6 +100,10 @@ Tab **Huis**: Bubble Card-knop **Verwarming** (kamertemperatuur, vlammetje als d
 
 Let op bij Bubble Card en deze thermostaat: de entity kan niet uit (`climate.turn_off` wordt niet ondersteund). Bubble zet bij een climate-entity standaard een toggle op de knop en op de kop van de pop-up. Daarom staan alle acties op de knop, de pop-up en de climate-kaart expliciet op more-info, navigate of none, en de pop-up op `button_type: state`.
 
+Gevraagde aanvoer: gebruik `sensor.opentherm_boiler_control_setpoint_1`. De thermostaatvariant staat vast op 6,0 en werd tot 2026-09-25 abusievelijk op de CV-tab en in de pendelmelding gebruikt.
+
+Entiteiten: de OTGW maakt elke waarde twee keer aan, als `opentherm_boiler_*` (antwoord van de ketel) en `opentherm_thermostat_*` (wat de iSense in het bericht zet). Voor gegevens die de iSense alleen opvraagt blijft de thermostaatkant altijd `unknown`. Op 2026-09-25 zijn 100 entiteiten verborgen (niet uitgeschakeld): alle `unknown`-entiteiten, tellers `*_start_count` (65535, niet ondersteund), CH2, koeling en zonneboiler (niet aanwezig), en ketelwaarden die de Avanta als 0 levert (waterdruk in bar, rookgastemperatuur, capaciteit, minimale modulatie, kamertemperatuur aan ketelkant). Blijven zichtbaar: alles wat een dashboard of automation gebruikt, de override-sensoren, `manufacturer_specific_diagnostic_code`, en tapwaterdebiet en -temperatuur (testweek tot 2026-10-01). De vlag voor lage waterdruk (`binary_sensor.opentherm_boiler_low_water_pressure`) werkt wel en blijft in gebruik.
+
 Modulatie (`sensor.opentherm_boiler_relative_modulation_level`) is relatief ten opzichte van het minimumvermogen. Bij CV staat die op 0 % met de vlam aan: de ketel brandt dan op minimum. Bij zacht weer (10 °C buiten) is dat al meer dan de vloer vraagt, dus de brander gaat ongeveer 2 keer per uur aan (runs van 8 tot 18 min, retour rond 24 °C). Dat is geen pendelen.
 
 Weergave: kamer-, aanvoer-, retour-, buitentemperatuur en gevraagde aanvoer tonen 1 decimaal (`display_precision`). OpenTherm levert waarden als 21,09765625.
